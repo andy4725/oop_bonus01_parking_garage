@@ -1,0 +1,69 @@
+@startuml
+
+abstract class Jarmu {
+  - rendszam : String
+  + Jarmu(rendszam : String)
+  + getRendszam() : String
+  {abstract} + dij(percek : long) : double
+}
+
+class Auto {
+  + dij(percek : long) : double
+}
+
+class Motor {
+  + dij(percek : long) : double
+}
+
+class Kisbusz {
+  + dij(percek : long) : double
+}
+
+class ElektromosAuto {
+  + dij(percek : long) : double
+}
+
+interface Ora {
+  + most() : long
+}
+
+class RendszerOra {
+  + most() : long
+}
+
+class TesztOra {
+  - aktualisIdo : long
+  + most() : long
+  + eloreallit(milliszekundum : long) : void
+}
+
+class Parkolohaz {
+  - szintekSzama : int
+  - helyekSzintenkent : int
+  - ora : Ora
+  - bentLevoJarmuvek : Map
+  - foglaltHelyek : int[]
+  - napiBevetel : double
+  + behajt(jarmu : Jarmu) : int
+  + kihajt(rendszam : String) : double
+}
+
+class ParkoloJegy {
+  - jarmu : Jarmu
+  - behajtasIdeje : long
+  - szint : int
+}
+
+Jarmu <|-- Auto
+Jarmu <|-- Motor
+Jarmu <|-- Kisbusz
+Jarmu <|-- ElektromosAuto
+
+Ora <|.. RendszerOra
+Ora <|.. TesztOra
+
+Parkolohaz --> Ora
+Parkolohaz "1" o-- "*" ParkoloJegy
+ParkoloJegy --> Jarmu
+
+@enduml
